@@ -1,1 +1,1 @@
-[My First Blog](./new-post.html)
+[My First Blog](./first-page.html)
