@@ -1,1 +1,1 @@
-[My First Blog](new-post.md)
+[My First Blog](./new-post.html)
