@@ -1,4 +1,5 @@
-# Build Settings
-
-markdown: kramdown
-theme: minima
+title: Yuanjun Ren's Blog
+description: This is my blog.
+show_downloads: true
+google_analytics:
+theme: jekyll-theme-minimal
