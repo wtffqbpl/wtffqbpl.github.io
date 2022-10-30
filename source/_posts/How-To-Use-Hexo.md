@@ -8,6 +8,29 @@ tags: Hexo
 
 The combination of Hexo + GithubPages is easy way to configure your own blog.  Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
+# Steps
+
+## Create a Github Repo
+
+You should create a repo for your blog, and the repo name must be `<username>.github.io`.
+
+## Init Hexo
+
+Then, navigate to `<username>.github.io` directory, run the following command to init Hexo blog.
+
+```bash
+# cd <username>.github.io
+hexo init
+```
+
+## Install Dependencies
+
+Finally, run the following command to finalize installing procedures.
+
+```bash
+npm install
+```
+
 # Hexo Useful Commands
 
 ## Create a new post
@@ -62,6 +85,33 @@ hexo config theme icarus
 Hexo provides numerous themes, please see [Hexo-Themes](https://hexo.io/themes/) for more details.
 
 ## Change Your Personnel Info
+
+User should change the personnel info in `_config.icarus.yml` file.
+
+## Notes
+
+All blog data are listed in `source/` directory. My `source` directory hierarchy is as follows:
+
+```
+» tree source     
+source
+├── _posts
+│   ├── How-To-Use-Hexo.md
+│   └── hello-world.md
+└── img
+    ├── alipay-qrcode.jpg
+    ├── logo.png
+    ├── logo.svg
+    └── wechat-qrcode.jpg
+
+2 directories, 6 files
+```
+
+If you want to change the default logo `logo.svg`, you should put your own `logo.svg` in `source/img/logo.svg`. Besides, Mac user can use `imagemagick` tool for png to svg conversion. For more details, you can see [imagemagick-homepage](https://www.imagemagick.org/script/index.php).  After install `imagemagick` tool, you can execute the following commands to convert.
+
+```bash
+convert logo.png logo.svg
+```
 
 # References
 
