@@ -1,0 +1,8 @@
+_site
+.sass-cache
+.jekyll-cache
+.deploy_git
+Gemfile.lock
+*.gem
+public
+node_modules
