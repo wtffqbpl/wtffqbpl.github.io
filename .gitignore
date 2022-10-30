@@ -1,4 +1,5 @@
 _site
+_config.icarus.yml
 .sass-cache
 .jekyll-cache
 .deploy_git
