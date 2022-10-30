@@ -40,7 +40,7 @@ $ hexo generate
 
 After generating all static files, you can deploy your blog on github pages. This command would create a `master` branch in your blog repo. So your github pages should be based on `master` branch. You can change the github pages' branch in `Settings->Pages->Branch`.
 
-![](https://raw.githubusercontent.com/wtffqbpl/blog-images/main/branch_configuration.png)
+![](https://raw.githubusercontent.com/wtffqbpl/blog-images/main/change_default_branch.png)
 
 ``` bash
 $ hexo deploy
