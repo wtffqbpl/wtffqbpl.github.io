@@ -200,7 +200,8 @@ struct ValueIdentity {
 };
 
 // variable template
-// This is a convenient way to call a value meta-functions using variable template.
+// This is a convenient way to call a value meta-functions using
+// variable template.
 template <auto X>
 inline constexpr auto ValueIdentity_v = ValueIdentity<X>::value;
 
@@ -238,9 +239,13 @@ struct integral_constant {
   using value_type  = T;
   using type        = integral_constant<T, v>;
   
-  constexpr operator value_type() const noexcept { return value; }
+  constexpr operator value_type() const noexcept {
+    return value;
+  }
   // this is a functor, a call operator.
-  constexpr value_type operator()() const noexcept { return value; }
+  constexpr value_type operator()() const noexcept {
+    return value;
+  }
 };
 ```
 
@@ -254,8 +259,10 @@ template <bool B>
 using bool_constant = integral_constant<bool, B>;
 
 // alias templates
-using true_type = bool_constant<true>; // this is equivalent to integral_constant<bool, true>.
-using false_type = bool_constant<false>; // this is equivalent to integral_constant<bool, false>.
+// this is equivalent to integral_constant<bool, true>.
+using true_type = bool_constant<true>;
+// this is equivalent to integral_constant<bool, false>.
+using false_type = bool_constant<false>;
 ```
 
 `true_type` and `false_type` are going to be meta-functions. They are called nullary meta-functions
@@ -317,10 +324,11 @@ struct is_void : std::false_type {};
 
 * Specialization: special case(s)
 ```cpp
-// The empty angle brackets mean it's an explicit full specialization,
-// and then we take the type that we are specializing for. And we put
-// it in right place.
-// In this case, we are going to return true and so these static_assert.
+// The empty angle brackets mean it's an explicit full
+// specialization, and then we take the type that we
+// are specializing for. And we put it in right place.
+// In this case, we are going to return true and so
+// these static_assert.
 template<>
 struct is_void<void> : std::true_type {};
 
@@ -359,13 +367,17 @@ the same result.
 template <typename T> struct is_void : std::false_type {};
 
 // specialization for void.
-template<> struct is_void<void> : std::true_type {};
+template<>
+struct is_void<void> : std::true_type {};
 // specialization for void const
-template<> struct is_void<void const> : std::true_type {};
+template<>
+struct is_void<void const> : std::true_type {};
 // specialization for void volatile
-template<> struct is_void<void volatile> : std::true_type {};
+template<>
+struct is_void<void volatile> : std::true_type {};
 // specialization for void const volatile
-template<> struct is_void <void const volatile> : std::true_type {};
+template<>
+struct is_void <void const volatile> : std::true_type {};
 
 // The standard mandates this as well.
 template <typename T>
@@ -390,8 +402,9 @@ remove_const<const volatile int> -> volatile int
 
 remove_const<int *> -> int *
 
-remove_const<cont int *> -> const int * // this because pointer to a constant,
-                                        // it is not a const pointer.
+remove_const<cont int *> -> const int *
+// this because pointer to a constant,
+// it is not a const pointer.
 
 remove_const<int const * const> -> int const *
 remove_const<int * const> -> int *
@@ -435,16 +448,20 @@ In this you can read it, if the bool condition is true, return T, else return F.
 template <typename T>
 struct TypeIdentitiy { using type = T; };
 
-// This partial specialization means condition is true, then returns T.
+// This partial specialization means condition is true,
+// then returns T.
 template <bool Condition,  typename T, typename F>
 struct conditional : TypeIdentity<T> {};
 
-// This partial specialization means condition is false, then conditional returns F.
+// This partial specialization means condition is false,
+// then conditional returns F.
 template <typename T, typename F>
 struct conditional<false, T, F> : TypeIdentity<F> {};
 
-static_assert(is_same_v<int, conditional_t<is_void<void>::value, int, long>);
-static_assert(is_same_v<long, conditional_t<is_void<char>::value, int, long>);
+static_assert(is_same_v<int, conditional_t<is_void<void>::value,
+                                           int, long>);
+static_assert(is_same_v<long, conditional_t<is_void<char>::value,
+                                           int, long>);
 ```
 
 Not all the type traits can be implemented by c++, the compiler has way more information about
@@ -476,12 +493,21 @@ is_union            is_member_function_pointer
 ## is_null_pointer
 
 ```cpp
-template <typename T> struct is_null_pointer : std::false_type {};
+template <typename T>
+struct is_null_pointer : std::false_type {};
 
-template <> struct is_null_pointer<std::nullptr_t> : std::true_type {};
-template <> struct is_null_pointer<std::nullptr_t const> : std::true_type {};
-template <> struct is_null_pointer<std::nullptr_t volatile> : std::true_type {};
-template <> struct is_null_pointer<std::nullptr_t const volatile> : std::true_type {};
+template <>
+struct is_null_pointer<std::nullptr_t>
+    : std::true_type {};
+template <>
+struct is_null_pointer<std::nullptr_t const>
+    : std::true_type {};
+template <>
+struct is_null_pointer<std::nullptr_t volatile>
+    : std::true_type {};
+template <>
+struct is_null_pointer<std::nullptr_t const volatile>
+    : std::true_type {};
 
 // The standard mandates this as well...
 template <typename T>
@@ -498,26 +524,50 @@ requires 12 specializations.
 template <typename T> struct is_floating_point : std::false_type {};
 
 // float type
-template <> struct is_floating_point<float> : std::true_type {};
-template <> struct is_floating_point<float const> : std::true_type {};
-template <> struct is_floating_point<float volatile> : std::true_type {};
-template <> struct is_floating_point<float const volatile> : std::true_type {};
+template <>
+struct is_floating_point<float> : std::true_type {};
+template <>
+struct is_floating_point<float const>
+    : std::true_type {};
+template <>
+struct is_floating_point<float volatile>
+    : std::true_type {};
+template <>
+struct is_floating_point<float const volatile>
+    : std::true_type {};
 
 // double type
-template <> struct is_floating_point<double> : std::true_type {};
-template <> struct is_floating_point<double const> : std::true_type {};
-template <> struct is_floating_point<double volatile> : std::true_type {};
-template <> struct is_floating_point<double const volatile> : std::true_type {};
+template <>
+struct is_floating_point<double>
+    : std::true_type {};
+template <>
+struct is_floating_point<double const>
+    : std::true_type {};
+template <>
+struct is_floating_point<double volatile>
+    : std::true_type {};
+template <>
+struct is_floating_point<double const volatile>
+    : std::true_type {};
 
 // long double type
-template <> struct is_floating_point<long double> : std::true_type {};
-template <> struct is_floating_point<long double const> : std::true_type {};
-template <> struct is_floating_point<long double volatile> : std::true_type {};
-template <> struct is_floating_point<long double const volatile> : std::true_type {};
+template <>
+struct is_floating_point<long double>
+    : std::true_type {};
+template <>
+struct is_floating_point<long double const>
+    : std::true_type {};
+template <>
+struct is_floating_point<long double volatile>
+    : std::true_type {};
+template <>
+struct is_floating_point<long double const volatile>
+    : std::true_type {};
 
 // for convenience use
 template <typename T>
-inline constexpr bool is_floating_point_v = is_floating_point<T>::value;
+inline constexpr bool is_floating_point_v =
+    is_floating_point<T>::value;
 ```
 
 ## is_integral
@@ -553,8 +603,12 @@ A new version of type traits(A Step in the right direction)
 ```cpp
 std::string_view remove_cv(std::string_view);
 
-bool is_void(std::string_view s) { return remove_cv(s) == "void"; }
-bool is_null_pointer(std::string_view s) { return remove_cv(s) == "std::nullptr_t"; }
+bool is_void(std::string_view s) {
+  return remove_cv(s) == "void";
+}
+bool is_null_pointer(std::string_view s) {
+  return remove_cv(s) == "std::nullptr_t";
+}
 bool is_floating_point(std::string_view input) {
   auto const s = remove_cv(input);
   return s == "float"
@@ -601,7 +655,8 @@ strut remove_volatile<T volatile> : TypeIdentity<T> {};
 
 // Standard mandated convenience alias.
 template <typename T>
-using remove_volatile_t = typename remove_volatile<T>::type;
+using remove_volatile_t =
+    typename remove_volatile<T>::type;
 ```
 
 ## remove_cv
@@ -617,9 +672,12 @@ using remove_volatile_t = typename remove_volatile<T>::type;
 // alias template
 template <typename T>
 using remove_cv = remove_const<remove_volatile_t<T>>;
-// remove_volatile_t<T> is the same thing with typename remove_volatile<T>::type.
-// Here we don't use remove_const_t, this because we want remove_cv to be a meta-function.
-// If we use remove_const_t, remove_cv is just a type either meta-function.
+// remove_volatile_t<T> is the same thing with typename
+// remove_volatile<T>::type.
+// Here we don't use remove_const_t, this because we want
+// remove_cv to be a meta-function.
+// If we use remove_const_t, remove_cv is just a type either
+// meta-function.
 
 template <typename T>
 using remove_cv_t = typename remove_cv<T>::type;
@@ -829,8 +887,9 @@ deal with types, not the data.
 // An empty struct, with no members of any kind
 struct Bar {};
 
-// BarIntObjectMemPtr is an alias for a type that is a pointer to a member of class Bar, where the
-// member is an int.
+// BarIntObjectMemPtr is an alias for a type that is a
+// pointer to a member of class Bar, where the member
+// is an int.
 using BarintObjectMemPtr = int Bar::*;
 
 // This, however, generates a hard compiler error
@@ -842,22 +901,25 @@ usign LongIntObjectMemPtr = ing long::*;
 ```cpp
 namespace detail {
 std::true_type is_nullptr(std::nullptr_t);
-// ... it will match anything. But it is the least priority. It will only ever be used if nothing
-// else matches. It'll only be used if it's the only one that matches.
+// ... it will match anything. But it is the least priority.
+// It will only ever be used if nothing else matches. It'll
+// only be used if it's the only one that matches.
 std::false_type is_nullptr(...);
 
 } // end of namespace detail
 
 template <typename T>
-using is_null_pointer = decltype(detail::is_nullptr(std::devlval<T>()));
+using is_null_pointer =
+    decltype(detail::is_nullptr(std::devlval<T>()));
 ```
 
 ```cpp
 static_assert(not is_null_pointer<int>::value);
 // This only match the second one.
 static_assert(is_null_pointer<std::nullptr_t>::value);
-// This can match two versions of `is_nullptr`, but overload resolution will choose the first one, 
-// because the first one is the best match.
+// This can match two versions of `is_nullptr`, but overload
+// resolution will choose the first one, because the first
+// one is the best match.
 ```
 
 Another case.
@@ -875,7 +937,8 @@ std::false_type isconst(TypeIdentity<T>);
 } // end of namespace detail
 
 template <typename T>
-using is_const = decltype(detail::isconst(std::declval<TypeIdentity<T>>()));
+using is_const =
+    decltype(detail::isconst(std::declval<TypeIdentity<T>>()));
 ```
 
 This uses technique called `Tag Dispatch`. `Tag Dispatch` is where we are creating a type that is
@@ -910,8 +973,9 @@ template <typename T>
 std::bool_constant<not std::is_union_v<T>>
 is_class_or_union(int T::*);
 
-// We only want to use the return type of `is_class_or_union` function. So we don't need to
-// create implementation for this function.
+// We only want to use the return type of `is_class_or_union`
+// function. So we don't need to create implementation for this
+// function.
 template <typename T>
 std::false_type is_class_or_union(...);
 }
@@ -934,12 +998,14 @@ template <typename T> constexpr bool is_class_or_union(...) {
 } // end of namespace detail
 
 template <typename T>
-using is_class = std::bool_constant<detail::is_class_or_union<T>(nullptr)>;
+using is_class =
+    std::bool_constant<detail::is_class_or_union<T>(nullptr)>;
 ```
 
 ```cpp
 template <typename T>
-using is_const = decltype(detail::isconst(std::declval<TypeIdentity<T>>()));
+using is_const =
+    decltype(detail::isconst(std::declval<TypeIdentity<T>>()));
 ```
 * **decltype** --- tells you to pretend that compiler will evaluate this expression, and give me the
 result the type that you would get from the evaluated expression.
@@ -958,8 +1024,9 @@ struct IsInPack;
 template <typename TargetT>
 struct IsInPack<TargetT> : std::false_type {};
 
-// NOTES: is_in_pack uses partial specialization to match the two same types.
-// If the first one matches the target, we are done.
+// NOTES: is_in_pack uses partial specialization to match
+// the two same types. If the first one matches the target,
+// we are done.
 template <typename TargetT, typename... Ts>
 struct IsInpack<TargetT, TargetT, Ts...> : std::true_type {};
 
