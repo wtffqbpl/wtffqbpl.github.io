@@ -1,6 +1,8 @@
 ---
 title: LLVM Series
 date: 2022-11-06 22:40:06
+cover: /img/llvm/LLVM.png
+excerpt: My LLVM notes categories.
 tags: LLVM
 ---
 

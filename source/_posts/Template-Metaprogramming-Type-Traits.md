@@ -1,6 +1,8 @@
 ---
 title: Template Metaprogramming---Type Traits
 date: 2022-11-06 18:19:30
+cover: /img/cpp/cpp.png
+excerpt: An overview notes about type_traits.h.
 tags:
   - Meta-Programming
   - C++

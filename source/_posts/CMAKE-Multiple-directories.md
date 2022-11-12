@@ -1,12 +1,14 @@
 ---
 title: CMAKE---Multiple directories
 date: 2022-10-31 00:01:50
+cover: /img/cmake/cmake-logo.png
+excerpt: CMake tutorials with multiple directories.
 tags: CMake
 ---
 
 # Overview
 
-CMake is a direcory-based project management tool. If your project has multiple directories, more `CMakeLists.txt` files should be created in your project directories.
+CMake is a directory-based project management tool. If your project has multiple directories, more `CMakeLists.txt` files should be created in your project directories.
 
 # Situation
 

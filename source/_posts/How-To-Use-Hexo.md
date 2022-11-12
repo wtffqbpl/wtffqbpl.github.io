@@ -1,16 +1,18 @@
 ---
 title: How To Use Hexo
 date: 2022-10-30 12:40:26
+cover: /img/hexo/hexo.png
+excerpt: This is an introduction for a very beginner about Hexo.
 tags: Hexo
 ---
 
 # Introduction
 
-The combination of Hexo + GithubPages is easy way to configure your own blog.  Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+The combination of Hexo + GithubPages is an easier way to configure your own blog.  Welcome to [Hexo](https://hexo.io/)! This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
 
 # Steps
 
-## Create a Github Repo
+## Create a GitHub Repo
 
 You should create a repo for your blog, and the repo name must be `<username>.github.io`.
 
@@ -113,8 +115,24 @@ If you want to change the default logo `logo.svg`, you should put your own `logo
 convert logo.png logo.svg
 ```
 
+## Add "Read More" tag for your posts
+There are two ways to add this tag. 
+* First, you can add `excerpt` tag in your post, and add some introductions for posts.
+
+```yaml
+title: New Article
+date: 2022-11-12
+excerpt: Introductions
+---
+# Contents ...
+```
+
+* add `<!-- more -->` line after introductions in your posts.
+
 # References
 
 * [PicGo-Configuration](https://ji2xpro.github.io/73d224e9/)
 * [Using-ssh-instead-of-http-in-config.yml-file](https://github.com/hexojs/hexo/issues/4757)
 * [Hexo-Doc](https://hexo.io/zh-cn/docs/) 
+* [Hexo-theme-icarus](https://github.com/ppoffice/hexo-theme-icarus)
+* [Hexo-theme-icarus-doc](https://ppoffice.github.io/hexo-theme-icarus/)
