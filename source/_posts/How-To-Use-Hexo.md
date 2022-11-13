@@ -2,6 +2,7 @@
 title: How To Use Hexo
 date: 2022-10-30 12:40:26
 cover: /img/hexo/hexo.png
+toc: true
 excerpt: This is an introduction for a very beginner about Hexo.
 tags: Hexo
 ---
