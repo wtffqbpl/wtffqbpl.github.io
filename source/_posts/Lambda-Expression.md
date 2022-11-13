@@ -1,7 +1,7 @@
 ---
 title: Lambda Expression
 date: 2022-11-08 12:54:15
-cover: /img/cpp/cpp.png
+cover: /img/cpp/lambda-expression.png
 excerpt: Learn how to use init-capture in lambda expression since C++14.
 tags:
   - C++

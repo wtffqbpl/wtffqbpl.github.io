@@ -2,7 +2,7 @@
 title: C++ Lambda Idioms
 date: 2022-11-13 02:34:20
 toc: true
-cover: /img/cpp/cpp.png
+cover: /img/cpp/lambda-expression.png
 excerpt: Have you ever inherited from a lambda? Can you think of three different ways to call a lambda recursively? Do you know what happens if we assign an immediately-invoked lambda expression to a static variable? If not, please read this post and talk this with me.
 tags:
   - C++
@@ -62,7 +62,8 @@ Something like this: `__func_type`.
 
 ```cpp
 struct __lambda_1 {
-  inline bool operator()(const Person& lhs, const Person& rhs) const {
+  inline bool operator()(const Person& lhs,
+                         const Person& rhs) const {
     return lhs.name < rhs.name;
   };
   
