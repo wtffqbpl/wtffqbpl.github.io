@@ -135,3 +135,144 @@ Then we do partition, then the predicates are at the beginning, and other not-bl
 
 The border between the blue ones and the not-blue ones is called a partition point, that's the end of the blue range and that's also the beginning of the not blue range.
 
+# PERMUTATIONS
+The elements move around the collection, even if they don't change value.
+![](https://raw.githubusercontent.com/wtffqbpl/blog-images/main/20221117124819.png)
+
+## std::rotate
+
+```cpp
+// since C++11 and until C++20
+template <typename ForwardIt>
+ForwardIt rotate(ForwardIt first, ForwardIt n_first, ForwardIt last);
+
+// since C++17
+template <typename ExecutionPolicy, class ForwardIt>
+ForwardIt rotate(ExecutionPolicy&& policy,
+                 ForwardIt first, ForwardIt n_first,
+                 ForwardIt last);
+```
+Performs a left rotation on a range of elements. Specifically, `std::rotate` swaps the elements in the range[first, last) in such a way that the element n_first becomes the first element of the new range and `n_first - 1` becomes the last element.
+
+## std::shuffle
+`std::shuffle` is used to randomly change elements in a container. So `std::shuffle` takes a collection with elements in a certain order, and takes something that generates random numbers, and rearranges the collection in random order. 
+
+## std::next_permutation/std::prev_permutation
+Given a collection of object, we can order them, order all their possible arrangements, and an intuitive way to see that is thinking about an alphabetical order.
+
+```cpp
+// until C++20
+template <typename BidirIt>
+bool next_permutation(BidirIt first, BidirIt last);
+
+// until C++20
+template <typename BidirIt, typename Compare>
+bool next_permutation(BidirIt first, BidirIt last,
+                      Compare comp);
+
+// since C++20
+template <typename BidirIt>
+constexpr bool next_permutation(BidirIt first,
+                                BidirIt last);
+
+// since C++20
+template <typename BidirIt, typename Compare>
+constexpr bool next_permutation(BidirIt first, BidirIt last,
+                                Compare comp);
+```
+Permutes the range [first, last) into the next permutation, where the set of all permutations is ordered lexicographically with respect to operator `<` or comp. Returns true if such a "next permutation" exists; otherwise transforms the range into the lexicographically first permutation (as if by `std::sort(first, last, comp)`) and returns `false`.
+That's interesting for every possible arrangement of a collection, we can repeatedly call `std::next_permutation` until you've cycled back to the beginning.
+
+# SECRET RUNES
+The secret runes are things that you can combine with other algorithms to generate new algorithms. I called them runs because it's like going to see runes to augment your powers and also because I find that kind of cool as a name.
+
+## PARTITIONING-SORT-HEAP
+
+### stable_* rune
+When we will see all the algorithm that go with the `stable` rune, so `stable` when you tack it onto an algorithm, it does what this algorithm does, but keep the relative order. Think `std::partition` for example, it put all the blue ones at the beginning that's for sure, but maybe in the process, some of them got swapped around. With `std::stable_partition`, they all keep the same relative order. Same thing with `std::stable_sort`.
+```
+stable_* ---> stable_sort
+         \
+           --> stable_partition
+```
+
+### is_* rune
+
+The `is_*` rune checks for a predicate on the collection. We know what sort, partition, heap, means is_sort/is_partition/is_heap and returns a boolean. To indicate whether it's a sorted/partitioned/heap that we are looking at.
+```
+is_*   -----| is_sorted
+            | is_partitioned 
+            | is_heap
+```
+
+### is_*_until
+
+`is_*_until` returns an iterator that's the first position where that predicate doesn't hold anymore. So for example, if we have a sorted collection, and then we call `std::is_sorted_until` we'll get the end of that collection.
+```
+is_*_until -----| is_sorted_until
+                | is_partitioned_until
+                | is_heap_until
+```
+
+# QUERIES
+So one thing you can extract out of a collection is some sort of value.
+
+## std::count
+For example, the simplest one is probably `std::count` that takes a begin and an end a value, and returns how many times this value occurs in the collection.
+![](https://raw.githubusercontent.com/wtffqbpl/blog-images/main/20221117131456.png)
+
+## std::accumulate/(transform_)reduce
+The `accumulate` makes some elements of the collection calling operator plus, or any custom function you'd pass it. In C++17, there's `std::reduce` appeared, that does practically the same thing as accumulate, except it has a slightly different interface. It can accept to take no initial value, and it can also be run in parallel, but essentially, it's the same as `std::accumulate`.
+
+`std::transform_reduce` takes a function and applies that function to the element of the collection before calling the `reduce`.
+![](https://raw.githubusercontent.com/wtffqbpl/blog-images/main/20221117131511.png)
+
+## std::partial_sum
+![](https://raw.githubusercontent.com/wtffqbpl/blog-images/main/20221117133825.png)
+I think this is the `pre-sum` algorithm in std algorithms.
+```cpp
+// until C++20
+template <typename InputIt, typename OutputIt>
+OutputIt partial_sum(InputIt first, InputIt last,
+                     OutputIt d_first);
+// until C++20
+template <typename InputIt, typename OutputIt,
+          typename BinaryOperation>
+OutputIt partial_sum(InputIt first, InputIt last,
+                     OutputIt d_first,
+                     BinaryOperation op);
+// since C++20
+template <typename InputIt, typename OutputIt>
+OutputIt partial_sum(InputIt first, InputIt last,
+                     OutputIt d_first);
+
+// since C++20
+template <typename InputIt, typename OutputIt,
+          typename BinaryOperation>
+constexpr OutputIt partial_sum(InputIt first,
+                               InputIt last,
+                               OutputIt d_first,
+                               BinaryOperation op);
+```
+`std::partial_sum`, it sums the all the elements starting from the beginning to the current point of the collection. So here, `partial_sum` would return a collection with, in the first position, what was in the first position of the original collection. and the second one would plus the seco
+
+Computes the partial sums of the elements in the sub-ranges of the range[first, last) and writes them to the range beginning at `d_dirst`. This is equivalent operation:
+```cpp
+*(d_first)     = *first;
+*(d_first + 1) = *first + *(first + 1);
+*(d_first + 2) = *first + *(first + 1) + *(first + 2);
+*(d_first + 3) = *first + *(first + 1) + *(first + 2) + *(first + 3);
+// ...
+```
+
+In C++17, there are `std::(transform_)inclusive_scan` and `std::(transform_)exclusive_scan`. `inclusive_scan` is the same thing as `partial_sum`, except it can run in parallel. `exclusive_scan` is the same as `inclusive_scan`, except it doesn't include the current element. So for example, with `exclusive_scan`, the second value is the same to the first element of the original collection. The third would be one plus second, so-on and so-forth.
+
+```cpp
+// *(d_first)     = ;
+*(d_first + 1) = *first;
+*(d_first + 2) = *first + *(first + 1);
+*(d_first + 3) = *first + *(first + 1) + *(first + 2);
+// ...
+```
+
+
