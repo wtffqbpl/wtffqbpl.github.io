@@ -2,8 +2,8 @@
 title: CUB Architecture Overview
 toc: true
 date: 2022-12-12 23:37:08
-cover:
-excerpt:
+cover: /img/cuda/cudathrust.jpeg
+excerpt: The introduction about CUB architecture.
 tags:
   - CUDA
   - CUB
