@@ -9,7 +9,7 @@ tags:
     - Interview
 ---
 
-* What is actual use of friend function and classes in C++?
+# What is actual use of friend function and classes in C++?
 
 If you declare a function is a friend of a class, then this function can visit private members in this class.
 For example, it is a good idea of the `<<` and `>>` operator overloading and adding as a friend of those classes.

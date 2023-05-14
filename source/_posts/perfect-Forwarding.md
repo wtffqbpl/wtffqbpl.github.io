@@ -3,7 +3,7 @@ title: Perfect Forwarding
 toc: true
 date: 2023-05-13 17:18:48
 cover: /img/cpp/cpp-basics-5.jpg
-excerpt: Do you want to learn
+excerpt: Do you know why `const T&` can bind to lvalue and rvalue? Do you know `T &&`? Do you know how to preserve the original type as input value? Do you know `perfect forwarding`? If any of these questions is unclear, don't hesitate to read this blog.
 tags:
 - Perfect Forwarding
 - C++
@@ -126,3 +126,4 @@ template<> void forward<int>(int &&) {}
 
 # References
 * ["Universal reference" or "forwarding reference"?](https://quuxplusone.github.io/blog/2022/02/02/look-what-they-need/)
+* [Perfect forwarding and universal references in C++](https://eli.thegreenplace.net/2014/perfect-forwarding-and-universal-references-in-c/)
