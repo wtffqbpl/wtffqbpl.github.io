@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>C++ Value Categories - Yuanjun&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Yuanjun&#039;s Blog"><meta name="msapplication-TileImage" content="/img/logo.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Yuanjun&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="C++ value categories."><meta property="og:type" content="blog"><meta property="og:title" content="C++ Value Categories"><meta property="og:url" content="https://wtffqbpl.github.io/2023/05/14/C-Value-Categories/"><meta property="og:site_name" content="Yuanjun&#039;s Blog"><meta property="og:description" content="C++ value categories."><meta property="og:locale" content="en_US"><meta property="og:image" content="https://wtffqbpl.github.io/img/cpp/cpp-basics-5.jpg"><meta property="article:published_time" content="2023-05-14T04:29:51.000Z"><meta property="article:modified_time" content="2023-05-16T06:19:53.760Z"><meta property="article:author" content="Yuanjun Ren"><meta property="article:tag" content="C++17"><meta property="article:tag" content="C++20"><meta property="article:tag" content="C++"><meta property="article:tag" content="C++14"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://wtffqbpl.github.io/img/cpp/cpp-basics-5.jpg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://wtffqbpl.github.io/2023/05/14/C-Value-Categories/"},"headline":"C++ Value Categories","image":["https://wtffqbpl.github.io/img/cpp/cpp-basics-5.jpg"],"datePublished":"2023-05-14T04:29:51.000Z","dateModified":"2023-05-16T06:19:53.760Z","author":{"@type":"Person","name":"Yuanjun Ren"},"publisher":{"@type":"Organization","name":"Yuanjun's Blog","logo":{"@type":"ImageObject","url":"https://wtffqbpl.github.io/img/logo.png"}},"description":"C++ value categories."}</script><link rel="canonical" href="https://wtffqbpl.github.io/2023/05/14/C-Value-Categories/"><link rel="icon" href="/img/logo.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const $tabMenu = document.querySelector(`a[href="${location.hash}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(location.hash);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.png" alt="Yuanjun&#039;s Blog" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/wtffqbpl/wtffqbpl.github.io"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="Catalogue" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="Search" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><div class="card-image"><span class="image is-7by3"><img class="fill" src="/img/cpp/cpp-basics-5.jpg" alt="C++ Value Categories"></span></div><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item">Posted&nbsp;<time dateTime="2023-05-14T04:29:51.000Z" title="5/14/2023, 12:29:51 PM">2023-05-14</time></span><span class="level-item">Updated&nbsp;<time dateTime="2023-05-16T06:19:53.760Z" title="5/16/2023, 2:19:53 PM">2023-05-16</time></span><span class="level-item">17 minutes read (About 2616 words)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>&nbsp;visits</span></div></div><h1 class="title is-3 is-size-4-mobile">C++ Value Categories</h1><div class="content"><h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>Consider the following code:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Data</span> &#123;</span><br><span class="line">  <span class="built_in">Data</span>(<span class="type">size_t</span> s);       <span class="comment">// constructor</span></span><br><span class="line">  <span class="built_in">Data</span>(<span class="type">const</span> Data &amp;);   <span class="comment">// copy constructor</span></span><br><span class="line">  <span class="built_in">Data</span>(Data &amp;&amp;)         <span class="comment">// move constructor</span></span><br><span class="line">  </span><br><span class="line">  <span class="type">size_t</span> s;</span><br><span class="line">  <span class="type">int</span> *b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">const</span> Data <span class="title">getData</span><span class="params">(<span class="type">size_t</span> s)</span> </span>&#123; <span class="keyword">return</span> Data&#123;s&#125;; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Consider what times does following code call constructors?</span></span><br><span class="line"><span class="keyword">auto</span> d1 = Data&#123;<span class="number">42</span>&#125;;         <span class="comment">// 1 --- constructor</span></span><br><span class="line"><span class="keyword">auto</span> d2 = std::<span class="built_in">move</span>(d1);    <span class="comment">// 0 --- d1 is pointer, then just move d1 value to d2;</span></span><br><span class="line"><span class="keyword">auto</span> d3 = <span class="built_in">getData</span>(<span class="number">42</span>);      <span class="comment">// 1 --- constructor</span></span><br><span class="line"><span class="keyword">auto</span> d4 = std::<span class="built_in">move</span>(<span class="built_in">getData</span>(<span class="number">42</span>)); <span class="comment">// 2, one for constructor, and since the</span></span><br><span class="line">                                  <span class="comment">// return type is const Data, so the copy</span></span><br><span class="line">                                  <span class="comment">// constructor is called for d4 construction.</span></span><br></pre></td></tr></table></figure>
+
+<p>Explanation<br><code>auto d4 = std::move(getData(42));</code></p>
+<ul>
+<li>Firstly, <code>Data(size_t s)</code> constructor is called by <code>getData()</code> function. Then the copy constructor is called because <code>getData</code> function returns a <code>const Data</code> object, so the copy constructor creates a new <code>Data</code> object, and <code>std::move</code> moves new object for <code>d4</code>.</li>
+</ul>
+<h1 id="Value-Categories"><a href="#Value-Categories" class="headerlink" title="Value Categories"></a>Value Categories</h1><p>Value Categories were inherited from C, with the porting of “lvalue expression”, which is originally referred to the location of expression with regards to assignment.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> a = <span class="built_in">int</span>(<span class="number">42</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>lvalue (left-value) was on the left of the assignment.</li>
+<li>rvalue (right-value) was on the right of the assignement.</li>
+</ul>
+<p>Value Category of an entity defines:</p>
+<ol>
+<li><strong>lifetime</strong><ul>
+<li>Can it be moved from</li>
+<li>Is it a temporary</li>
+<li>Is it observable after change, etc</li>
+</ul>
+</li>
+<li><strong>Identity</strong><ul>
+<li>Object has identity if its address can be taken and used safely</li>
+</ul>
+</li>
+</ol>
+<p><strong>Value Categories</strong> affect two very important aspects:</p>
+<blockquote>
+<p>Performance<br>Overload resolution</p>
+</blockquote>
+<p>Value Category is a quality of an expression.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Data</span> &#123;</span><br><span class="line">  <span class="built_in">Data</span>(<span class="type">int</span> x);</span><br><span class="line">  <span class="type">int</span> x_;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(Data &amp;&amp;x)</span> </span>&#123; x = <span class="number">42</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br><span class="line">Data &amp;&amp;a = <span class="number">42</span>;</span><br><span class="line"><span class="built_in">foo</span>(a);         <span class="comment">// Fail! lvalue!</span></span><br><span class="line"><span class="built_in">foo</span>(Data&#123;<span class="number">73</span>&#125;);  <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+<p><strong>Explanation</strong><br><code>Data &amp;&amp;a</code> is <code>rvalue reference</code>, but this is confusing because <code>a</code> have a name we can take and change it, which means this is an <code>lvalue</code>.</p>
+<ul>
+<li><strong>a’s Type</strong>:  rvalue reference to Data</li>
+<li><strong>a’s Value Category</strong>: lvalue<br>The entity can have different <code>Value Category</code> in <strong>different contexts</strong>.<br>So let’s look at function <code>foo</code> that takes data, during calling this function, we firstly create this unamed temporary data with 73, <code>foo</code> function binds the temporary data object to this rvalue reference, now in this function <code>foo</code>, this temporary entity has a name inside the scope of the <code>foo</code> function, so inside the scope of the foo function, this entity is an <strong>lvalue</strong>, because we can take its address we can assign to it. So the different scope gave different value category to the same entity.</li>
+</ul>
+<p>Each <strong>expression</strong> has two properties:</p>
+<ul>
+<li>A <strong>TYPE</strong> (including CV qualifiers)</li>
+<li>A <strong>VALUE CATEGORY</strong></li>
+</ul>
+<p><strong>Value Category</strong> is a quality of an expression.</p>
+<p>Expression Category taxonomy</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">       expression</span><br><span class="line">       /        \</span><br><span class="line">  glvalue      rvalue</span><br><span class="line">  /     \      /    \</span><br><span class="line">lvalue    xvalue    prvalue</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>C++11: added rvalue references, move semantics:</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Has Identity (glvalue)</th>
+<th>Doesn’t have identity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Can’t be moved from</td>
+<td>lvalue</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Can’t be moved from (rvalue)</td>
+<td>xvalue</td>
+<td>prvalue</td>
+</tr>
+</tbody></table>
+<ul>
+<li>C++17: added guaranteed copy elision:<br>[<a target="_blank" rel="noopener" href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/p0135r0.html">P0135</a>] Guaranteed copy elision through simplified value categories</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Has Identity (glvalue)</th>
+<th>Doesn’t have identity</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Can’t be moved from</td>
+<td>lvalue</td>
+<td>-</td>
+</tr>
+<tr>
+<td>Can’t be moved from (rvalue)</td>
+<td>xvalue</td>
+<td>prvalue materialization</td>
+</tr>
+</tbody></table>
+<p>The result of a prvalue is the value that the expression stores into its context. So then we materialize this thing and we get the prvalue.</p>
+<ul>
+<li><p>C++20:<br>[p0527]: Implicitly move from rvalue references in return statements<br>Moved Value Categories section from [basic] to [expt — expression]</p>
+</li>
+<li><p>C++23:<br>[P0847]: Deducing this</p>
+</li>
+</ul>
+<p>TODO: Differences about value categories between C++11 and C++17 and C++20<br>TODO: <a target="_blank" rel="noopener" href="https://medium.com/@barryrevzin/value-categories-in-c-17-f56ae54bccbe">Value Categories in C++17</a></p>
+<h2 id="Main-Categories-classification-only"><a href="#Main-Categories-classification-only" class="headerlink" title="Main Categories (classification only)"></a>Main Categories (classification only)</h2><ul>
+<li><strong>glvalue</strong>: (have identity) expression whose evaluation determines the identity of an object or function.</li>
+<li><strong>rvalue</strong>: (can be moved from) a prvalue or an xvalue</li>
+</ul>
+<h2 id="Subcategories"><a href="#Subcategories" class="headerlink" title="Subcategories"></a>Subcategories</h2><ul>
+<li><p><strong>lvalue</strong>: glvalue that is not an xvalue</p>
+</li>
+<li><p><strong>xvalue</strong>: glvalue that denotes an object whose resources can be reused (usually because it is near the end of its lifetime).</p>
+</li>
+<li><p><strong>prvalue</strong>: expression whoes evaluation initializes an object, or computes the value of the operand of an operator, as specified by the context in which it appears, or an expression that has type cv void.</p>
+</li>
+<li><p><strong>glvalue</strong></p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Data</span> &#123; <span class="type">int</span> n; <span class="type">int</span>* pn = &amp;n; &#125;;</span><br><span class="line"><span class="function">Data&amp; <span class="title">getData</span><span class="params">(Data&amp; d)</span> </span>&#123; <span class="keyword">return</span> d; &#125;</span><br><span class="line"><span class="type">int</span> a = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span> b = a;</span><br><span class="line"><span class="type">int</span>&amp; la = a;</span><br><span class="line"><span class="type">int</span>* pa = &amp;a;</span><br><span class="line"><span class="type">int</span>&amp;&amp; ra = <span class="number">42</span>;</span><br><span class="line">a++;</span><br><span class="line">++a;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> arr[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;;</span><br><span class="line">arr[<span class="number">0</span>] = <span class="number">73</span>;</span><br><span class="line">Data d;</span><br><span class="line">(&amp;d)-&gt;n = <span class="number">42</span>;</span><br><span class="line">d.n = <span class="number">73</span>;</span><br><span class="line">*d.pn = <span class="number">42</span>;</span><br><span class="line">string s = <span class="string">&quot;Hello world&quot;</span>;</span><br><span class="line">a == b ? b : c;</span><br><span class="line">Data c = <span class="built_in">getData</span>(d);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>prvalue</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Data</span> &#123;</span><br><span class="line">  <span class="type">int</span> n;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">()</span> </span>&#123; <span class="keyword">this</span>-&gt;n = <span class="number">4</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span>* pa = &amp;a;</span><br><span class="line">pa = <span class="literal">nullptr</span>;</span><br><span class="line">a++;</span><br><span class="line">++a;</span><br><span class="line"></span><br><span class="line"><span class="keyword">auto</span> l = []() &#123; <span class="keyword">return</span> <span class="number">2</span>; &#125;;</span><br><span class="line">Data d;</span><br><span class="line">Data* dp = &amp;d;</span><br><span class="line"><span class="built_in">Data</span>();</span><br><span class="line">d-&gt;n = <span class="number">6</span>;</span><br><span class="line">d.n = <span class="number">6</span>;</span><br><span class="line">string s = <span class="string">&quot;Hello world&quot;</span>;</span><br><span class="line">a == a ? <span class="keyword">throw</span> <span class="number">4</span> : <span class="keyword">throw</span> <span class="number">2</span>;</span><br><span class="line"><span class="type">bool</span> equals = a == <span class="number">42</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>xvalue</strong></li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Data</span> &#123; <span class="type">int</span> n; <span class="type">int</span>* pn = &amp;n; &#125;;</span><br><span class="line"></span><br><span class="line">Data d1 = Data&#123;<span class="number">42</span>&#125;;</span><br><span class="line">d1.*pn = <span class="number">73</span>;</span><br><span class="line">Data d2 = std::<span class="built_in">move</span>(d1);</span><br><span class="line"><span class="built_in">Data</span>().n;</span><br><span class="line"></span><br><span class="line"><span class="function">Data <span class="title">getData</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> Data&#123;<span class="number">73</span>&#125;; &#125;</span><br><span class="line">Data d3 = <span class="built_in">getData</span>();</span><br><span class="line">d1 == d2 ? Data&#123;<span class="number">42</span>&#125; : Data&#123;<span class="number">73</span>&#125;;</span><br></pre></td></tr></table></figure>
+
+<h1 id="The-Details-of-Binding"><a href="#The-Details-of-Binding" class="headerlink" title="The Details of Binding"></a>The Details of Binding</h1><ul>
+<li>Expressions with different Value Categories “bind” to different types of References.</li>
+<li>The Reference type which binds the expression determines the permitted operations.</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span>&amp; la = a;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; cla = a;</span><br><span class="line"><span class="type">int</span>&amp;&amp; ra = a + <span class="number">73</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp;&amp; cra = <span class="number">42</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ... </span></span><br><span class="line">la = <span class="number">73</span>;  <span class="comment">// OK, a = la = 73</span></span><br><span class="line">cla = <span class="number">42</span>; <span class="comment">// Error</span></span><br><span class="line">ra = <span class="number">73</span>;  <span class="comment">// OK, int&amp;&amp; ra = a + 73, this means there exits a ra, and ra value is a + 73,</span></span><br><span class="line">          <span class="comment">// then ra = 73 means change ra value to 73 since ra is lvalue category.</span></span><br><span class="line">cra = <span class="number">42</span>; <span class="comment">// Error</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Binding rules are important as part of the following “events”:<ul>
+<li>Initialization or assignment</li>
+<li>Function call (including non-static class member function called on an object)</li>
+<li>Return statement</li>
+</ul>
+</li>
+</ul>
+<p>So all of these three different events that happens in your code needs to take the value category and the binding rules under consideration.</p>
+<h3 id="Initialization-or-Assignment"><a href="#Initialization-or-Assignment" class="headerlink" title="Initialization or Assignment"></a>Initialization or Assignment</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">42</span>;</span><br><span class="line"><span class="type">int</span>&amp; la1 = a;                 <span class="comment">// OK la = 42</span></span><br><span class="line"><span class="type">int</span>&amp; la2 = <span class="number">73</span>;                <span class="comment">// Error</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; cla1 = a;          <span class="comment">// OK</span></span><br><span class="line">cosnt <span class="type">int</span>&amp; cla2 = <span class="number">73</span>;         <span class="comment">// OK</span></span><br><span class="line"><span class="type">int</span>&amp;&amp; ra1 = a;                <span class="comment">// Error</span></span><br><span class="line"><span class="type">int</span>&amp;&amp; ra2 = a + <span class="number">42</span>;           <span class="comment">// OK</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp;&amp; cra1 = a;         <span class="comment">// Error</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp;&amp; cra2 = a + <span class="number">42</span>;    <span class="comment">// OK</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Binding Rules</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Binds lvalues?</th>
+<th>Binds rvalues?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lvalue reference</td>
+<td>YES</td>
+<td><font color="red">NO</font></td>
+</tr>
+<tr>
+<td>const lvalue reference</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>rvalue reference</td>
+<td><font color="red">NO</font></td>
+<td>YES</td>
+</tr>
+<tr>
+<td>const rvalue reference</td>
+<td><font color="red">NO</font></td>
+<td>YES</td>
+</tr>
+</tbody></table>
+<p>rvalues can be bound to const lvalue reference and rvalue reference and to const rvalue reference. lvalues can be bound to lvalue reference and const lvalue reference. This is very important in the scope of talking about move constructor.<br>If a rvalue is bound to a const lvalue reference, it will extend its lifetime, rvalue reference can extend the lifetime of a temporary.</p>
+<p>Limitations is the context of the function are according to the binding function:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Function can modify data??</th>
+<th>Caller can observe (old) data?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>lvalue reference</td>
+<td>YES</td>
+<td>YES</td>
+</tr>
+<tr>
+<td>const lvalue reference</td>
+<td><font color="red">NO</font></td>
+<td>YES</td>
+</tr>
+<tr>
+<td>rvalue reference</td>
+<td>YES</td>
+<td><font color="red">NO</font></td>
+</tr>
+<tr>
+<td>const rvalue reference</td>
+<td><font color="red">NO</font></td>
+<td><font color="red">NO</font></td>
+</tr>
+</tbody></table>
+<h2 id="Copy-Elision-Optimizations"><a href="#Copy-Elision-Optimizations" class="headerlink" title="Copy Elision Optimizations"></a>Copy Elision Optimizations</h2><p>Return Statement:<br>Starting from C++17, the behavior of VCs is affected by: “<a target="_blank" rel="noopener" href="https://google.com.hk/">PO135</a> Guaranteed copy elision (…)”<br>There are two mandatory elisions of copy and move constructors:</p>
+<ol>
+<li><p>Object Initialization</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Data d = Data&#123;Data&#123;<span class="number">42</span>&#125;&#125;;</span><br><span class="line"><span class="comment">// 1 CTOR (avoids: Copy CTOR)</span></span><br><span class="line"><span class="comment">// In C++17, copy constructor would be removed.</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Return Statement<br>An un-named Return Value Optimization (RVO):</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Data <span class="title">getData</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123; <span class="keyword">return</span> Data&#123;x&#125;; &#125;</span><br><span class="line">Data d = <span class="built_in">getData</span>(<span class="number">42</span>);</span><br><span class="line"><span class="comment">// 1 CTOR (avoids Move CTOR)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Return Statement: Materialization<br>Temporary materialization conversion <a target="_blank" rel="noopener" href="https://google.com.hk/">conv.rval</a><br>A prvalue of type T can be converted to an xvalue of type T. This conversion initializes a temporary object of type T from the prvalue by <strong>evaluating the prvalue</strong> with the temporary object as its result object, and produces an xvalue denoting the temporary object.</p>
+</li>
+</ol>
+<p>In order to materialize, T shall be a complete type.</p>
+<h2 id="The-Details-of-Binding-1"><a href="#The-Details-of-Binding-1" class="headerlink" title="The Details of Binding"></a>The Details of Binding</h2><ul>
+<li><p>To summarize:<br>Binding rules apply in the following “events”:</p>
+<blockquote>
+<ol>
+<li>initialization or assignment</li>
+<li>Function call (including non-static class member function called on an object)</li>
+<li>Return statements</li>
+</ol>
+</blockquote>
+</li>
+<li><p>Behavior of the entity(which :<br>The behavior of the entity is defined by the things that binds it.</p>
+<blockquote>
+<ol>
+<li>Initialization: limits are according to the reference which binds it.</li>
+<li>Function call: limits inside the function are according to the overload which binds it.</li>
+<li>Return statement: limits as in initialization, with additional rules due to optimizations and const</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h1 id="Reference-Collision"><a href="#Reference-Collision" class="headerlink" title="Reference Collision"></a>Reference Collision</h1><p>In case of concatenation of multiple ‘&amp;’ symbols, such as in generic code, or in code using type aliases. Compiler performs <strong>Reference Collision</strong>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="type">int</span>&amp; lr;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">int</span>&amp;&amp; rr;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Compiler knows the actual types, and then</span></span><br><span class="line"><span class="comment">// compiler performs reference collision, we can</span></span><br><span class="line"><span class="comment">// get the actual types.</span></span><br><span class="line">lr&amp; b = a;      <span class="comment">// lr&amp; -&gt; int&amp;&amp; -&gt; int&amp;</span></span><br><span class="line">lr&amp;&amp; c = a;     <span class="comment">// lr&amp;&amp; -&gt; int&amp;&amp;&amp; -&gt; int&amp;</span></span><br><span class="line">rr&amp; d = a;      <span class="comment">// rr&amp; -&gt; int&amp;&amp;&amp; -&gt; int&amp;</span></span><br><span class="line">rr&amp;&amp; e = <span class="number">73</span>;    <span class="comment">// rr&amp;&amp; -&gt; int&amp;&amp;&amp;&amp; -&gt; int&amp;&amp;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Forwarding-Reference"><a href="#Forwarding-Reference" class="headerlink" title="Forwarding Reference"></a>Forwarding Reference</h2><p>Forwarding parameters inside a function template should consider Value Categories. The term for them was first suggested by Scott Myers, “universal reference”, and later, formalized as “<strong>forwarding reference</strong>“.<br>Due to TAD, “rvalue reference” has a special meaning in context of function template:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// In the following code, T&amp;&amp; looks like rvalue reference,</span></span><br><span class="line"><span class="comment">// But it is actually a forwarding reference (only in this</span></span><br><span class="line"><span class="comment">// context).</span></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(T&amp;&amp; t)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Type of T here</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">42</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; cla = a;</span><br><span class="line"><span class="type">int</span>&amp;&amp; b = <span class="number">73</span>;</span><br><span class="line"><span class="comment">// This conversion is due to Reference Collision.</span></span><br><span class="line"><span class="built_in">foo</span>(a);               <span class="comment">// T = int&amp;</span></span><br><span class="line"><span class="built_in">foo</span>(cla);             <span class="comment">// T = const int&amp;</span></span><br><span class="line"><span class="built_in">foo</span>(std::<span class="built_in">move</span>(a));    <span class="comment">// T = T = int</span></span><br></pre></td></tr></table></figure>
+<p>T&amp;&amp; keeps the value category of the type the instantiation is based on.</p>
+<h1 id="tools-for-Handling-Value-Categories"><a href="#tools-for-Handling-Value-Categories" class="headerlink" title="tools for Handling Value Categories"></a>tools for Handling Value Categories</h1><p>This tools helps you to manipulate value categories to understand better and to control them in your code.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">std::move</span><br><span class="line">std::forward</span><br><span class="line">std::decay</span><br><span class="line">std::declval</span><br><span class="line">decltype specifier</span><br><span class="line">Deducing this (C++23)</span><br></pre></td></tr></table></figure>
+
+<h2 id="std-move"><a href="#std-move" class="headerlink" title="std::move"></a>std::move</h2><p>Utility function, produces an xvalue expression T&amp;&amp;, this equivalent to <code>static_cast</code> to a <code>T</code> value reference type: <code>static_cast&lt;typename std::remove_reference&lt;T&gt;::type&amp;&amp;&gt;(t)</code></p>
+<p>Notice that <code>std::move</code> may not always do what you hoped:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">int</span>&amp; x)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;int&amp;&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; x)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;const int&amp;&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">int</span>&amp;&amp; x)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;int&amp;&amp;&quot;</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">73</span>;</span><br><span class="line"><span class="type">int</span>&amp; b = a;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; c = a;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp;&amp; d = <span class="number">42</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">foo</span>(std::<span class="built_in">move</span>(b));    <span class="comment">// int&amp;&amp;        --&gt; foo(int&amp;&amp;)</span></span><br><span class="line"><span class="built_in">foo</span>(std::<span class="built_in">move</span>(c));    <span class="comment">// const int&amp;   --&gt; foo(const int&amp;)</span></span><br><span class="line"><span class="built_in">foo</span>(std::<span class="built_in">move</span>(d));    <span class="comment">// const int&amp;&amp;  --&gt; foo(const int&amp;)</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="std-forward"><a href="#std-forward" class="headerlink" title="std::forward"></a>std::forward</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::forward&lt;T&gt;(expression);</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://google.com.hk/">N1385 The forwarding problem: Arguments</a>, presented two issues: forwarding params, and returning result. Suggested utility function, preserves value category of the object passed to the template.<br>It suggests a solution for the forwarding problem. In this paper, they’ve recognized that there is an issue and the value categories are something be that needs to be preserved, and suggested this utility.</p>
+<p><code>std::forward</code> uses <code>std::remove_reference&lt;T&gt;</code> to get the value type. <code>std::forward</code> uses other utilities from the standard library in the implementation, and <strong>it’s commonly used combined with forwarding reference</strong>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// There are three overloads of the functions.</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">int</span>&amp; x)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;int&amp;&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; x)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;const int&amp;&quot;</span>; &#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">foo</span><span class="params">(<span class="type">int</span>&amp;&amp; x)</span> </span>&#123; std::cout &lt;&lt; <span class="string">&quot;int&amp;&amp;&quot;</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">wrapper</span><span class="params">(T&amp;&amp; t)</span> </span>&#123; <span class="built_in">foo</span>(std::forward&lt;T&gt;(t)); &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">nfwrapper</span><span class="params">(T&amp;&amp; t)</span> </span>&#123; <span class="built_in">foo</span>(t); &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">73</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span>&amp; lca = a;</span><br><span class="line"><span class="built_in">wrapper</span>(a);         <span class="comment">// int&amp;</span></span><br><span class="line"><span class="built_in">nfwrapper</span>(a);       <span class="comment">// int&amp;</span></span><br><span class="line"><span class="built_in">wrapper</span>(lca);       <span class="comment">// const int&amp;</span></span><br><span class="line"><span class="built_in">nfwrapper</span>(lca);     <span class="comment">// const int&amp;</span></span><br><span class="line"><span class="built_in">wrapper</span>(<span class="number">6</span>);         <span class="comment">// int&amp;&amp;</span></span><br><span class="line"><span class="built_in">nfwrapper</span>(<span class="number">6</span>);       <span class="comment">// int&amp;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="std-decay"><a href="#std-decay" class="headerlink" title="std::decay"></a>std::decay</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::decay&lt;T&gt;::type</span><br></pre></td></tr></table></figure>
+<p>Type trait, result is accessible through <code>_t</code>. Performs the following conversions:</p>
+<ol>
+<li>Array to pointer</li>
+<li>Function to function pointer</li>
+<li>lvalue to rvalue (removes cv qualifiers, references) (issue for move-only types)</li>
+</ol>
+<p>it is the <code>std::decay</code> is doing something very similar to what <code>auto</code> is doing. </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">decay_is_same</span> :</span><br><span class="line">    std::is_same&lt;<span class="keyword">typename</span> std::decay&lt;T&gt;::type, U&gt;</span><br><span class="line">&#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// How to use former definition:</span></span><br><span class="line">decay_is_same&lt;<span class="type">int</span>&amp;, <span class="type">int</span>&gt;::value; <span class="comment">// True</span></span><br></pre></td></tr></table></figure>
+<p>This behavior should be familiar to you, as it resembles <code>auto</code>s behavior (<code>auto</code> performs auto-decay).<br><font color="red">TODO</font></p>
+<h2 id="decltype-specifier"><a href="#decltype-specifier" class="headerlink" title="decltype specifier"></a>decltype specifier</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>( expression );</span><br></pre></td></tr></table></figure>
+<p><code>decltype</code> is a language thing, is a language utility, and it bascially gives you back the type of the object including value category, which is very important.</p>
+<p><code>decltype</code> evaluates  an expression, yields its <strong>type + value category</strong> (AKA the declared type).<br><code>decltype</code> (unlike auto) preserves value category. For an expression of type T:</p>
+<ul>
+<li>If expression is xvalue, yields <code>T&amp;&amp;</code>.</li>
+<li>If expression is lvalue, yields <code>T&amp;</code>.</li>
+<li>If expression is prvalue, yields <code>T</code>.</li>
+</ul>
+<p><code>decltype</code> can be used instead of a type, as a placeholder which preserves value categories</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span>&amp;&amp; <span class="title">foo</span><span class="params">(<span class="type">int</span>&amp; i)</span> </span>&#123; <span class="keyword">return</span> std::<span class="built_in">move</span>(i); &#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> i = <span class="number">73</span>;</span><br><span class="line"><span class="keyword">auto</span> a = <span class="built_in">foo</span>(i);            <span class="comment">// Type: int        | VC: lvalue</span></span><br><span class="line"><span class="keyword">decltype</span>(<span class="keyword">auto</span>) b = <span class="built_in">foo</span>(i);  <span class="comment">// Type: rvalue ref | VC: lvalue</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>The T prvalue doesn’t materialize, so T can be an incomplete type (C++17).</li>
+<li>If evaluation fails (entity is not found or overload resolution fails), program is ill-formed.</li>
+</ul>
+<p><code>((expression))</code> has a special meaning, and <strong>yields an lvalue expression</strong>.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>&amp;&amp; a = <span class="number">42</span>;</span><br><span class="line"><span class="keyword">decltype</span>(a) b = <span class="number">42</span>;   <span class="comment">// Type: rvalue ref to int | VC: lvalue</span></span><br><span class="line"><span class="keyword">decltype</span>((a)) c = <span class="number">73</span>; <span class="comment">// Error! Binding non-const lvalue ref to prvalue</span></span><br></pre></td></tr></table></figure>
+
+<p><code>decltype</code> main use cases:</p>
+<ol>
+<li>When the type is unknown (syntax is available from C++14), we can use that to retrieve the type.<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keyword">typename</span> U&gt;</span><br><span class="line"><span class="function"><span class="keyword">decltype</span>(<span class="keyword">auto</span>) <span class="title">Add</span><span class="params">(T t, U u)</span> </span>&#123; <span class="keyword">return</span> t + u; &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="keyword">decltype</span>(<span class="keyword">auto</span>) <span class="title">Wrapper</span><span class="params">(T&amp;&amp; t)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// do something...</span></span><br><span class="line">  <span class="keyword">return</span> std::forward&lt;T&gt;(t);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>To preserve the value category of the expression.<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> &amp;&amp; a = <span class="number">32</span>;        <span class="comment">// Type: rvalue ref to int | VC: lvalue</span></span><br><span class="line"><span class="keyword">decltype</span>(a) b = a;    <span class="comment">// Error! (binding rvalue ref to an lvalue ref a)</span></span><br><span class="line"><span class="keyword">decltype</span>(a) c = <span class="number">73</span>;   <span class="comment">// Type: rvalue ref to int | VC: lvalue</span></span><br><span class="line"><span class="keyword">decltype</span>((a)) d = a;  <span class="comment">// Type: lvalue ref to int | VC: lvalue</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="std-declval"><a href="#std-declval" class="headerlink" title="std::declval"></a>std::declval</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::<span class="built_in">declval</span>&lt;T&gt;( )</span><br></pre></td></tr></table></figure>
+<p>It basically takes an object and return the type.<br>Utility function produces:</p>
+<ul>
+<li><p>xvalue expression <code>T&amp;&amp;</code>.</p>
+</li>
+<li><p>If T is void, returns <code>T</code>.</p>
+</li>
+<li><p><code>std::declval</code> can be used with expression to return the expression’s reference type.</p>
+</li>
+<li><p>It can <strong>return a non-constructible or incomplete type</strong>.</p>
+</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">foo</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">42</span>; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="built_in">Type</span>() &#123; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Fails, the Type() constructor is a private function.</span></span><br><span class="line">Type t;</span><br><span class="line"><span class="comment">// Type, we can use this incomplete type for std::declval.</span></span><br><span class="line"><span class="built_in">typeid</span>(std::<span class="built_in">declval</span>&lt;Type&gt;()).<span class="built_in">name</span>();</span><br></pre></td></tr></table></figure>
+<p>So this is a way for you to communicate with compiler.<br>Combined with <code>decltype</code>, we can get the type of a member (even when Type is non-constructible).</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">decltype</span>(std::<span class="built_in">declval</span>&lt;Type&gt;().a) b = <span class="number">73</span>;</span><br></pre></td></tr></table></figure>
+<p><code>std::declval</code> shouldn’t be used in an evaluated context (evaluating <code>std::decltype</code> is an error).</p>
+<p><code>std::declval</code> allows us to access T members, in a way preserves value categories.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  <span class="type">int</span> a;</span><br><span class="line">  <span class="type">int</span>&amp; ra = a;</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getA</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="type">int</span>&#123;<span class="number">73</span>&#125;; &#125;</span><br><span class="line">  <span class="function"><span class="type">int</span>&amp; <span class="title">getRefA</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> ra; &#125;</span><br><span class="line">  </span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">  <span class="built_in">Type</span>(<span class="type">int</span> i) : <span class="built_in">a</span>(<span class="built_in">int</span>(i)) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">std::<span class="built_in">declval</span>&lt;Type&gt;().a;         <span class="comment">// xvalue</span></span><br><span class="line">std::<span class="built_in">declval</span>&lt;Type&gt;().ra;        <span class="comment">// lvalue</span></span><br><span class="line">std::<span class="built_in">declval</span>&lt;Type&gt;().<span class="built_in">getA</span>();    <span class="comment">// prvalue</span></span><br><span class="line">std::<span class="built_in">declval</span>&lt;Type&gt;().<span class="built_in">getRefA</span>(); <span class="comment">// lvalue</span></span><br></pre></td></tr></table></figure>
+
+<p><code>std::decltype</code> and <code>std::declval</code> are often used to transform between type and instance, for example:</p>
+<h2 id="Deducing-This-C-23"><a href="#Deducing-This-C-23" class="headerlink" title="Deducing This (C++23)"></a>Deducing This (C++23)</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Foo</span><span class="params">(<span class="keyword">this</span> T&amp;&amp; t)</span> </span>&#123; &#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://google.com.hk/">P0847: Deducing this - voted into C++23</a><br><code>this</code> allows specifying from within a member function the value category of the expression it’s invoked on</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">()</span> <span class="type">const</span> &amp;</span>;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">()</span> &amp;</span>;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">()</span> &amp;&amp;</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This can be re-written like this:</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">(<span class="keyword">this</span> <span class="type">const</span> Type&amp;)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">(<span class="keyword">this</span> Type&amp;)</span></span>;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">(<span class="keyword">this</span> Type&amp;&amp;)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>Combined with the forwarding reference, we can now write all these in a single template function.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Type</span> &#123;</span><br><span class="line">  <span class="keyword">template</span> &lt;<span class="keyword">typename</span> Self&gt;</span><br><span class="line">  <span class="function"><span class="keyword">auto</span> <span class="title">Foo</span><span class="params">(<span class="keyword">this</span> Self&amp;&amp; self)</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>This would help you to write libraries, or multiple overloads.</p>
+<p>“Deducing this” feature introduced two new utilities: <code>std::like_t</code> and <code>std::forward_like&lt;T&gt;(u)</code>. <code>std::like_t</code> applies CV and ref-qualifiers of T onto U. For example:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">std::<span class="type">like_t</span>&lt;<span class="type">double</span>&amp;, <span class="type">int</span>&gt;;          <span class="comment">// int&amp;</span></span><br><span class="line">std::<span class="type">like_t</span>&lt;<span class="type">const</span> <span class="type">double</span>&amp;, <span class="type">int</span>&gt;;    <span class="comment">// const int&amp;</span></span><br><span class="line">std::<span class="type">like_t</span>&lt;<span class="type">double</span>&amp;&amp;, <span class="type">int</span>&gt;;         <span class="comment">// int&amp;&amp;</span></span><br><span class="line">std::<span class="type">like_t</span>&lt;<span class="type">const</span> <span class="type">double</span>&amp;&amp;, <span class="type">int</span>&gt;;   <span class="comment">// const int&amp;&amp;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::forward_like&lt;T&gt;(U) -&gt; std::forward&lt;std::<span class="type">like_t</span>&lt;T, <span class="keyword">decltype</span>(u)&gt;&gt;(u)</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2010/n3055.pdf">A Taxonomy of Expression Value Categories</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=tH0Z2OvHAd8&list=PLHTh1InhhwT6c2JNtUiJkaH8YRqzhU7Ag&index=80">Master C++ Value Categories With Standard Tools</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@barryrevzin/value-categories-in-c-17-f56ae54bccbe">Value Categories in C++17</a></li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>C++ Value Categories</p><p><a href="https://wtffqbpl.github.io/2023/05/14/C-Value-Categories/">https://wtffqbpl.github.io/2023/05/14/C-Value-Categories/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>Author</h6><p>Yuanjun Ren</p></div></div><div class="level-item is-narrow"><div><h6>Posted on</h6><p>2023-05-14</p></div></div><div class="level-item is-narrow"><div><h6>Updated on</h6><p>2023-05-16</p></div></div><div class="level-item is-narrow"><div><h6>Licensed under</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/C-17/">C++17</a><a class="link-muted mr-2" rel="tag" href="/tags/C-20/">C++20</a><a class="link-muted mr-2" rel="tag" href="/tags/C/">C++</a><a class="link-muted mr-2" rel="tag" href="/tags/C-14/">C++14</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">Like this article? Support the author with</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>Alipay</span><span class="qrcode"><img src="/img/alipay-qrcode.jpg" alt="Alipay"></span></a><a class="button donate" href="/" target="_blank" rel="noopener" data-type="buymeacoffee"><span class="icon is-small"><i class="fas fa-coffee"></i></span><span>Buy me a coffee</span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>Wechat</span><span class="qrcode"><img src="/img/wechat-qrcode.jpg" alt="Wechat"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2023/05/14/C-Basics/"><span class="level-item">C++ Basics</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">Comments</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "74c40724645bb36ec02a2082f42f6205",
+            repo: "wtffqbpl.github.io",
+            owner: "wtffqbpl",
+            clientID: "91ed89a1c2b6427b0731",
+            clientSecret: "133fc04688d9a06b6d46e34f1e40909bd5780033",
+            admin: ["wtffqbpl"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/profile.jpg" alt="Yuanjun Ren"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Yuanjun Ren</p><p class="is-size-6 is-block">C++ Programmer</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Xi&#039;an/China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">Posts</p><a href="/archives"><p class="title">24</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Categories</p><a href="/categories"><p class="title">0</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">Tags</p><a href="/tags"><p class="title">17</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/wtffqbpl" target="_blank" rel="noopener">Follow</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/wtffqbpl"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Linkedin" href="https://www.linkedin.com/in/yuanjun-ren-5a7949bb"><i class="fab fa-linkedin"></i></a></div></div></div><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">Catalogue</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Motivation"><span class="level-left"><span class="level-item">1</span><span class="level-item">Motivation</span></span></a></li><li><a class="level is-mobile" href="#Value-Categories"><span class="level-left"><span class="level-item">2</span><span class="level-item">Value Categories</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Main-Categories-classification-only"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Main Categories (classification only)</span></span></a></li><li><a class="level is-mobile" href="#Subcategories"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Subcategories</span></span></a></li></ul></li><li><a class="level is-mobile" href="#The-Details-of-Binding"><span class="level-left"><span class="level-item">3</span><span class="level-item">The Details of Binding</span></span></a><ul class="menu-list"><ul class="menu-list"><li><a class="level is-mobile" href="#Initialization-or-Assignment"><span class="level-left"><span class="level-item">3.1.1</span><span class="level-item">Initialization or Assignment</span></span></a></li></ul><li><a class="level is-mobile" href="#Copy-Elision-Optimizations"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">Copy Elision Optimizations</span></span></a></li><li><a class="level is-mobile" href="#The-Details-of-Binding-1"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">The Details of Binding</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Reference-Collision"><span class="level-left"><span class="level-item">4</span><span class="level-item">Reference Collision</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Forwarding-Reference"><span class="level-left"><span class="level-item">4.1</span><span class="level-item">Forwarding Reference</span></span></a></li></ul></li><li><a class="level is-mobile" href="#tools-for-Handling-Value-Categories"><span class="level-left"><span class="level-item">5</span><span class="level-item">tools for Handling Value Categories</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#std-move"><span class="level-left"><span class="level-item">5.1</span><span class="level-item">std::move</span></span></a></li><li><a class="level is-mobile" href="#std-forward"><span class="level-left"><span class="level-item">5.2</span><span class="level-item">std::forward</span></span></a></li><li><a class="level is-mobile" href="#std-decay"><span class="level-left"><span class="level-item">5.3</span><span class="level-item">std::decay</span></span></a></li><li><a class="level is-mobile" href="#decltype-specifier"><span class="level-left"><span class="level-item">5.4</span><span class="level-item">decltype specifier</span></span></a></li><li><a class="level is-mobile" href="#std-declval"><span class="level-left"><span class="level-item">5.5</span><span class="level-item">std::declval</span></span></a></li><li><a class="level is-mobile" href="#Deducing-This-C-23"><span class="level-left"><span class="level-item">5.6</span><span class="level-item">Deducing This (C++23)</span></span></a></li></ul></li><li><a class="level is-mobile" href="#References"><span class="level-left"><span class="level-item">6</span><span class="level-item">References</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><!--!--><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">Tags</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/C/"><span class="tag">C++</span><span class="tag">16</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-11/"><span class="tag">C++11</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-14/"><span class="tag">C++14</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-17/"><span class="tag">C++17</span><span class="tag">11</span></a></div><div class="control"><a class="tags has-addons" href="/tags/C-20/"><span class="tag">C++20</span><span class="tag">10</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CMake/"><span class="tag">CMake</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CUB/"><span class="tag">CUB</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/CUDA/"><span class="tag">CUDA</span><span class="tag">3</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Hexo/"><span class="tag">Hexo</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Interview/"><span class="tag">Interview</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/LLVM/"><span class="tag">LLVM</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Lambda/"><span class="tag">Lambda</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Meta-Programming/"><span class="tag">Meta-Programming</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Perfect-Forwarding/"><span class="tag">Perfect Forwarding</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/RAII/"><span class="tag">RAII</span><span class="tag">2</span></a></div><div class="control"><a class="tags has-addons" href="/tags/STL/"><span class="tag">STL</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Thrust/"><span class="tag">Thrust</span><span class="tag">3</span></a></div></div></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">Recents</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-14T04:29:51.000Z">2023-05-14</time></p><p class="title"><a href="/2023/05/14/C-Value-Categories/">C++ Value Categories</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-14T03:54:22.000Z">2023-05-14</time></p><p class="title"><a href="/2023/05/14/C-Basics/">C++ Basics</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-14T03:20:57.000Z">2023-05-14</time></p><p class="title"><a href="/2023/05/14/C-Iterator-System/">C++ Iterator System</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-14T01:30:17.000Z">2023-05-14</time></p><p class="title"><a href="/2023/05/14/C-Best-Practices/">C++ Best Practices</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2023-05-13T11:03:04.000Z">2023-05-13</time></p><p class="title"><a href="/2023/05/13/Argument-Dependent-Lookup/">Argument Dependent Lookup</a></p></div></article></div></div><div class="card widget" data-type="archives"><div class="card-content"><div class="menu"><h3 class="menu-label">Archives</h3><ul class="menu-list"><li><a class="level is-mobile" href="/archives/2023/05/"><span class="level-start"><span class="level-item">May 2023</span></span><span class="level-end"><span class="level-item tag">10</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/12/"><span class="level-start"><span class="level-item">December 2022</span></span><span class="level-end"><span class="level-item tag">2</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/11/"><span class="level-start"><span class="level-item">November 2022</span></span><span class="level-end"><span class="level-item tag">9</span></span></a></li><li><a class="level is-mobile" href="/archives/2022/10/"><span class="level-start"><span class="level-item">October 2022</span></span><span class="level-end"><span class="level-item tag">3</span></span></a></li></ul></div></div></div><div class="card widget" data-type="subscribe-email"><div class="card-content"><div class="menu"><h3 class="menu-label">Subscribe for updates</h3><form action="https://feedburner.google.com/fb/a/mailverify" method="post" target="popupwindow" onsubmit="window.open(&#039;https://feedburner.google.com/fb/a/mailverify?uri=&#039;,&#039;popupwindow&#039;,&#039;scrollbars=yes,width=550,height=520&#039;);return true"><input type="hidden" value="" name="uri"><input type="hidden" name="loc" value="en_US"><div class="field has-addons"><div class="control has-icons-left is-expanded"><input class="input" name="email" type="email" placeholder="Email"><span class="icon is-small is-left"><i class="fas fa-envelope"></i></span></div><div class="control"><input class="button" type="submit" value="Subscribe"></div></div></form></div></div></div><div class="card widget" data-type="links"><div class="card-content"><div class="menu"><h3 class="menu-label">Links</h3><ul class="menu-list"><li><a class="level is-mobile" href="https://coderchenlin.github.io/" target="_blank" rel="noopener"><span class="level-left"><span class="level-item">Lin&#039;s Blog</span></span><span class="level-right"><span class="level-item tag">coderchenlin.github.io</span></span></a></li></ul></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.png" alt="Yuanjun&#039;s Blog" height="28"></a><p class="is-size-7"><span>&copy; 2023 Yuanjun Ren</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">Visited by <span id="busuanzi_value_site_uv">0</span> users</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/wtffqbpl/wtffqbpl.github.io"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("en");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="Back to top" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "This website uses cookies to improve your experience.",
+          dismiss: "Got it!",
+          allow: "Allow cookies",
+          deny: "Decline",
+          link: "Learn more",
+          policy: "Cookie Policy",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><style>.searchbox .searchbox-body { background: white; }</style><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="Type something..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"><gcse:searchresults-only></gcse:searchresults-only></div></div><script>(function() {
+            var cx = 'd795d66993bb247ae';
+            var gcse = document.createElement('script');
+            gcse.type = 'text/javascript';
+            gcse.async = true;
+            gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(gcse, s);
+        })();</script></div><script src="/js/google_cse.js"></script></body></html>
